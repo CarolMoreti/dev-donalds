@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Donald's</title>
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/restaurante.css">
+</head>
+<body>
+    <header>
+        <div class="btn-back">
+            <button class="ball"><a href="./index.html"><img src="./assets/img/Chevron-left.png" alt=""></a></button>
+        </div>
+        <div class="btn-orders">
+            <button class="ball"><img src="./assets/img/Scroll Text.png " alt=""></button>
+        </div>
+    </header>
+    <div id="sacola" class="sacola">
+        <button id="fechar-sacola" class="ball">X</button>
+        <h2>Sacola de Pedidos</h2>
+        <ul id="lista-pedidos">
+
+        </ul>
+        <div class="resumo-sacola">
+  <div class="linha-resumo">
+    <span>Subtotal</span>
+    <span id="subtotal">R$ 0,00</span>
+  </div>
+  <div class="linha-resumo">
+    <span>Descontos</span>
+    <span id="descontos">R$ 0,00</span>
+  </div>
+  <div class="linha-resumo total">
+    <strong>Total</strong>
+    <strong id="total">R$ 0,00</strong>
+  </div>
+  <button class="finalizar-btn">Finalizar Pedido</button>
+</div>
+    </div>
+    <section class="infopop">
+        <div class="main-info">
+            <img src="./assets/img/McDonald's_Golden_Arches 2.png" alt="" class="logo-info">
+            <div class="text-info">
+                <h1>DEV Donald's</h1>
+                <p>Fast Food</p>
+            </div>
+            <div class="star-rate">
+                <img src="./assets/img/star.png" alt="" class="star">
+                <p>5.0</p>
+            </div>
+        </div>
+        <div class="state">
+            <img src="./assets/img/clock.png" alt="" class="clock">
+            <p style="color: var(--forth);">Aberto</p>
+        </div>
+    </section>
+    <div class="categories">
+        <button class="category active" data-category="lanches">Lanches</button>
+        <button class="category" data-category="fritas">Fritas</button>
+        <button class="category" data-category="sobremesas">Sobremesas</button>
+        <button class="category" data-category="bebidas">Bebidas</button>
+    </div>
+    <div class="products" id="products">
+  
+    </div>
+
+</body>
+<script src="./assets/js/search.js"></script>
+<script src="./assets/js/sacola.js"></script>
+</html>

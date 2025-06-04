@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Donald's</title>
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/produto.css">
+</head>
+<body>
+    <header>
+        <div class="btn-back">
+            <div class="ball"><a href="./restaurante.html"><img src="./assets/img/Chevron-left.png" alt=""></a></div>
+        </div>
+        <div class="btn-orders">
+            <div class="ball"><img src="./assets/img/Scroll Text.png " alt=""></div>
+        </div>
+    </header>
+    <div id="sacola" class="sacola">
+        <button id="fechar-sacola" class="ball">X</button>
+        <h2>Sacola de Pedidos</h2>
+        <ul id="lista-pedidos">
+
+        </ul>
+        <div class="resumo-sacola">
+  <div class="linha-resumo">
+    <span>Subtotal</span>
+    <span id="subtotal">R$ 0,00</span>
+  </div>
+  <div class="linha-resumo">
+    <span>Descontos</span>
+    <span id="descontos">R$ 0,00</span>
+  </div>
+  <div class="linha-resumo total">
+    <strong>Total</strong>
+    <strong id="total">R$ 0,00</strong>
+  </div>
+  <button class="finalizar-btn">Finalizar Pedido</button>
+</div>
+    </div>
+    <main>
+        <div class="titulo">
+            <div class="logo-titulo">
+                <img src="./assets/img/McDonald's_Golden_Arches 2.png" style="border-radius: 100%; width: 16px; height: 16px;" alt="" class="logo-img-produto">
+                <p>Dev Donald's</p>
+            </div>
+            <h1 id="product-name"></h1>
+            <div class="preco">
+                <h1 id="product-price"></h1>
+            </div>
+        </div>
+        <div class="sobre">
+            <h1>Sobre</h1>
+            <p id="product-desc"></p>
+        </div>
+        <div class="ingredientes">
+            <h1>ingredientes</h1>
+            <p id="product-ingredients"></p>
+        </div>
+        <button id="add">Adicionar à Sacola</button>
+    </main>
+</body>
+<script src="./assets/js/search.js"></script>
+<script>
+        const diminuir = document.getElementById('diminuir')
+        const aumentar = document.getElementById('aumentar');
+        const displayNumberSpan = document.getElementById('displayNumber');
+
+        // Variável para controlar o número atual
+        let currentNumber = 1;
+        
+        // Função para aumentar o número
+        function aumentarnum() {
+            currentNumber++; // Aumenta o número em 1
+            displayNumberSpan.textContent = currentNumber; // Atualiza o texto exibido
+            console.log('Número atual:', currentNumber); // Opcional: para ver no console do navegador
+        }
+        diminuir.addEventListener('click', () => {
+        if (currentNumber > 1) {
+            currentNumber--;
+            displayNumberSpan.textContent = currentNumber;
+        }
+    });
+
+        // Adiciona o event listener ao botão
+        aumentar.addEventListener('click', aumentarnum);
+        diminuir.addEventListener('click', diminuirnum)
+
+        
+</script>
+<script src="./assets/js/sacola.js"></script>
+</html>
