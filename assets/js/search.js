@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', () => {
+
 const categories = document.querySelectorAll('.category');
 const productsDiv = document.getElementById('products');
 
@@ -77,7 +79,7 @@ if (productsDiv) {
   }
 }
 
-const btnSacola = document.querySelector('.btn-orders'); // botão da sacola
+const btnSacola = document.getElementById('btn-orders'); // botão da sacola
 const sacola = document.getElementById('sacola');
 
 btnSacola.addEventListener('click', () => {
@@ -96,6 +98,11 @@ function salvarSacola(sacola) {
 function carregarSacola() {
   const sacola = localStorage.getItem('sacola');
   return sacola ? JSON.parse(sacola) : [];
+}
+function esvaziarSacola() {
+  localStorage.removeItem('sacola'); // Remove o item 'sacola' do localStorage
+  renderizarSacola(); // Renderiza a sacola novamente (que estará vazia)
+  console.log('Sacola esvaziada!');
 }
 
 function renderizarSacola() {
@@ -187,7 +194,6 @@ if (addBtn && listaPedidos) {
 }
 
 
-
 function atualizarResumo() {
   const sacola = carregarSacola();
 
@@ -205,6 +211,142 @@ function atualizarResumo() {
   salvarSacola(sacola);
 }
 
+function atualizarResumoSacolaFlutuante() {
+  const itensSacola = carregarSacola();
+  let total = 0;
+  let quantidadeTotal = 0;
 
+  itensSacola.forEach(item => {
+    const precoNumerico = parseFloat(item.price.toString().replace('R$', '').trim().replace(',', '.'));
+    total += precoNumerico * item.quantity;
+    quantidadeTotal += item.quantity;
+  });
+
+  const resumoTotal = document.getElementById('resumo-total');
+  const resumoItens = document.getElementById('resumo-itens');
+  const resumo = document.getElementById('resumo-sacola-pop');
+
+  if (resumoTotal && resumoItens && resumo) {
+    resumoTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    resumoItens.textContent = quantidadeTotal;
+
+    if (quantidadeTotal > 0) {
+      resumo.classList.add('ativa');
+    } else {
+      resumo.classList.remove('ativa');
+    }
+  }
+}
+    const finalizarBtn = document.getElementById('finalizar-btn'); // Botão inicial "Finalizar pedido"
+    const popupOverlay = document.getElementById('popup-overlay'); // O primeiro pop-up
+    const cancelarBtn = document.getElementById('cancelar-btn'); // Botão "Cancelar" do primeiro pop-up
+    const finalizarPedidoBtn = document.getElementById('finalizar-pedido-btn'); // Botão "Finalizar" do primeiro pop-up
+
+    // Seletores para o pop-up de sucesso
+    const successPopupOverlay = document.getElementById('success-popup-overlay'); // O pop-up de sucesso
+    const continueBtn = document.getElementById('continue-btn'); // Botão "Continuar" do pop-up de sucesso
+    const viewOrdersBtn = document.querySelector('.view-orders-btn'); // Botão "Ver pedidos" do pop-up de sucesso
+
+
+    // --- Verifica se os elementos foram encontrados (para depuração) ---
+    if (finalizarBtn) console.log('Botão .finalizar-btn encontrado.'); else console.error('ERRO: Botão .finalizar-btn NÃO encontrado!');
+    if (popupOverlay) console.log('Overlay #popup-overlay encontrado.'); else console.error('ERRO: Overlay #popup-overlay NÃO encontrado!');
+    if (cancelarBtn) console.log('Botão #cancelar-btn encontrado.'); else console.error('ERRO: Botão #cancelar-btn NÃO encontrado!');
+    if (finalizarPedidoBtn) console.log('Botão #finalizar-pedido-btn encontrado.'); else console.error('ERRO: Botão #finalizar-pedido-btn NÃO encontrado!');
+    if (successPopupOverlay) console.log('Overlay #success-popup-overlay encontrado.'); else console.error('ERRO: Overlay #success-popup-overlay NÃO encontrado!');
+    if (continueBtn) console.log('Botão #continue-btn encontrado.'); else console.error('ERRO: Botão #continue-btn NÃO encontrado!');
+    if (viewOrdersBtn) console.log('Botão .view-orders-btn encontrado.'); else console.error('ERRO: Botão .view-orders-btn NÃO encontrado!');
+    // --- Fim da verificação de elementos ---
+
+
+    // 1. Abre o pop-up de dados ao clicar no botão inicial "Finalizar pedido"
+    if (finalizarBtn) {
+        finalizarBtn.addEventListener('click', function() {
+            console.log('Botão "Finalizar pedido" (inicial) clicado. Abrindo pop-up de dados.');
+            popupOverlay.style.display = 'flex'; // Torna o overlay visível
+        });
+    }
+
+    // 2. Fecha o pop-up de dados ao clicar em "Cancelar"
+    if (cancelarBtn) {
+        cancelarBtn.addEventListener('click', function() {
+            console.log('Botão "Cancelar" clicado no pop-up de dados. Fechando pop-up de dados.');
+            popupOverlay.style.display = 'none';
+        });
+    }
+
+    // 3. Fecha o pop-up de dados ao clicar fora do conteúdo (no overlay)
+    if (popupOverlay) {
+        popupOverlay.addEventListener('click', function(event) {
+            if (event.target === popupOverlay) {
+                console.log('Clicou fora do pop-up de dados. Fechando pop-up de dados.');
+                popupOverlay.style.display = 'none';
+            }
+        });
+    }
+
+    // 4. Lógica principal: Ao clicar em "Finalizar" no pop-up de dados
+    if (finalizarPedidoBtn) {
+        finalizarPedidoBtn.addEventListener('click', function() {
+            console.log('Botão "Finalizar" (dentro do pop-up de dados) clicado.');
+            const nome = document.getElementById('nome').value;
+            const cpf = document.getElementById('cpf').value;
+
+            if (nome.trim() === '' || cpf.trim() === '') {
+                // Se os campos estiverem vazios, exibe um alerta (você pode substituir por uma mensagem mais amigável no pop-up)
+                alert('Por favor, preencha todos os campos!');
+                console.log('Campos vazios. Exibindo alerta.');
+            } else {
+                // Se os campos estiverem preenchidos:
+                console.log('Campos preenchidos. Fechando pop-up de dados e abrindo pop-up de sucesso.');
+                // 4.1. Esconde o pop-up de dados
+                popupOverlay.style.display = 'none';
+
+                // 4.2. Mostra o pop-up de sucesso
+                successPopupOverlay.style.display = 'flex';
+
+                // *** Aqui você enviaria os dados para o servidor, faria requisições, etc. ***
+                console.log(`Dados para envio: Nome: ${nome}, CPF: ${cpf}`);
+
+                // Opcional: Limpar os campos após o envio
+                document.getElementById('nome').value = '';
+                document.getElementById('cpf').value = '';
+            }
+        });
+    }
+
+    // 5. Fecha o pop-up de sucesso ao clicar em "Continuar"
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+            console.log('Botão "Continuar" clicado no pop-up de sucesso. Fechando pop-up de sucesso.');
+            successPopupOverlay.style.display = 'none';
+            // Opcional: Redirecionar para a página inicial ou outra página
+            // window.location.href = '/';
+            esvaziarSacola();
+        });
+    }
+
+    // 6. Fecha o pop-up de sucesso ao clicar fora do conteúdo (no overlay)
+    if (successPopupOverlay) {
+        successPopupOverlay.addEventListener('click', function(event) {
+            if (event.target === successPopupOverlay) {
+                console.log('Clicou fora do pop-up de sucesso. Fechando pop-up de sucesso.');
+                successPopupOverlay.style.display = 'none';
+            }
+        });
+    }
+
+    // 7. Lógica para o botão "Ver pedidos" no pop-up de sucesso (opcional)
+    if (viewOrdersBtn) {
+        viewOrdersBtn.addEventListener('click', function() {
+            successPopupOverlay.style.display = 'none';
+            popupOverlay.style.display = 'flex';
+            // Opcional: Redirecionar para a página de pedidos
+            // window.location.href = '/meus-pedidos';
+        });
+    }
 
 atualizarResumo();
+atualizarResumoSacolaFlutuante();
+
+});
